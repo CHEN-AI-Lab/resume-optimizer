@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Resume Optimizer — AI 简历智能优化",
+    "description": "上传简历，AI 智能分析并优化，帮你拿到更多面试机会",
+    "keywords": "简历优化, AI 简历, 简历修改, 面试, 求职"
+  },
+  "nav": {
+    "home": "首页",
+    "analyze": "简历优化",
+    "privacy": "隐私政策",
+    "language": "English"
+  },
+  "hero": {
+    "title": "AI 智能简历优化",
+    "subtitle": "上传你的简历，AI 在 30 秒内分析并给出优化建议，帮你拿到更多面试机会",
+    "cta": "开始优化简历"
+  },
+  "features": {
+    "title": "为什么选择我们",
+    "ats": {
+      "title": "ATS 智能评分",
+      "desc": "模拟招聘系统，检测简历关键词匹配度和 ATS 通过率"
+    },
+    "suggestions": {
+      "title": "精准优化建议",
+      "desc": "AI 分析每段经历，给出可操作的修改建议"
+    },
+    "format": {
+      "title": "一键导出 PDF",
+      "desc": "优化后直接导出专业排版的 PDF 简历"
+    }
+  },
+  "pricing": {
+    "free": {
+      "name": "免费体验",
+      "price": "¥0",
+      "desc": "体验 AI 简历分析",
+      "features": [
+        "基础简历评分",
+        "3 次免费分析",
+        "简单优化建议"
+      ]
+    },
+    "pro": {
+      "name": "专业优化",
+      "price": "¥19.9",
+      "desc": "一次性付费，永久使用",
+      "features": [
+        "深度 ATS 评分分析",
+        "逐段优化建议",
+        "关键词匹配优化",
+        "专业 PDF 简历导出",
+        "无限次使用"
+      ],
+      "cta": "立即升级"
+    }
+  },
+  "upload": {
+    "title": "上传你的简历",
+    "drag": "拖拽文件到此处，或点击选择",
+    "formats": "支持 PDF、DOCX 格式",
+    "limit": "每天免费分析 3 次",
+    "analyzing": "AI 正在分析你的简历...",
+    "success": "分析完成！"
+  },
+  "result": {
+    "score": "简历评分",
+    "atsScore": "ATS 匹配度",
+    "keywords": "关键词分析",
+    "suggestions": "优化建议",
+    "improved": "优化版简历",
+    "downloadPdf": "下载优化版 PDF",
+    "improveNow": "立即优化",
+    "freeUsed": "今日免费次数已用完",
+    "upgrade": "升级专业版",
+    "error": "分析出错，请重试",
+    "retry": "重新上传"
+  },
+  "success": {
+    "title": "支付成功！🎉",
+    "description": "感谢升级到专业版！现在可以无限次使用所有功能了。",
+    "back": "返回首页"
+  },
+  "footer": {
+    "copyright": "© 2026 Resume Optimizer. All rights reserved.",
+    "privacy": "隐私政策",
+    "contact": "联系我们"
+  }
+}

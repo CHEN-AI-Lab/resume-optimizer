@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Resume Optimizer — AI-Powered Resume Optimization",
+    "description": "Upload your resume, AI analyzes and optimizes it to help you land more interviews",
+    "keywords": "resume optimization, AI resume, resume builder, job search, career"
+  },
+  "nav": {
+    "home": "Home",
+    "analyze": "Resume",
+    "privacy": "Privacy",
+    "language": "中文"
+  },
+  "hero": {
+    "title": "AI Resume Optimizer",
+    "subtitle": "Upload your resume and get AI-powered analysis with actionable suggestions in 30 seconds",
+    "cta": "Optimize Your Resume"
+  },
+  "features": {
+    "title": "Why Choose Us",
+    "ats": {
+      "title": "ATS Score",
+      "desc": "Simulate applicant tracking systems to check keyword matching and pass rate"
+    },
+    "suggestions": {
+      "title": "Smart Suggestions",
+      "desc": "AI analyzes each section and provides actionable improvement tips"
+    },
+    "format": {
+      "title": "PDF Export",
+      "desc": "Export a professionally formatted PDF resume after optimization"
+    }
+  },
+  "pricing": {
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "desc": "Try AI resume analysis",
+      "features": [
+        "Basic resume scoring",
+        "3 free analyses",
+        "Simple suggestions"
+      ]
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$1.99",
+      "desc": "One-time payment, lifetime access",
+      "features": [
+        "Deep ATS analysis",
+        "Section-by-section optimization",
+        "Keyword matching improvement",
+        "Professional PDF export",
+        "Unlimited usage"
+      ],
+      "cta": "Upgrade Now"
+    }
+  },
+  "upload": {
+    "title": "Upload Your Resume",
+    "drag": "Drag & drop your file here, or click to browse",
+    "formats": "Supports PDF, DOCX formats",
+    "limit": "3 free analyses per day",
+    "analyzing": "AI is analyzing your resume...",
+    "success": "Analysis complete!"
+  },
+  "result": {
+    "score": "Resume Score",
+    "atsScore": "ATS Match",
+    "keywords": "Keyword Analysis",
+    "suggestions": "Suggestions",
+    "improved": "Optimized Resume",
+    "downloadPdf": "Download Optimized PDF",
+    "improveNow": "Optimize Now",
+    "freeUsed": "Daily free limit reached",
+    "upgrade": "Upgrade to Pro",
+    "error": "Analysis failed, please try again",
+    "retry": "Upload Again"
+  },
+  "success": {
+    "title": "Payment Successful! 🎉",
+    "description": "Thank you for upgrading to Pro! You now have unlimited access to all features.",
+    "back": "Back to Home"
+  },
+  "footer": {
+    "copyright": "© 2026 Resume Optimizer. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us"
+  }
+}
