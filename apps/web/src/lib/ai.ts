@@ -59,8 +59,12 @@ export async function analyzeResume(
   }
 
   const data = await response.json();
-  const content = data.choices?.[0]?.message?.content;
+  let content: string = data.choices?.[0]?.message?.content;
   if (!content) throw new Error("AI returned empty response");
+
+  // Strip markdown code block wrapping if present (SenseTime sometimes wraps JSON)
+  const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (jsonMatch) content = jsonMatch[1].trim();
 
   const result = JSON.parse(content) as ResumeAnalysisResult;
 

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 
@@ -18,8 +19,10 @@ if (existsSync(envPath)) {
   });
 }
 
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
 const nextConfig: NextConfig = {
-  experimental: {},
+  outputFileTracingRoot: resolve("../../"),
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);
