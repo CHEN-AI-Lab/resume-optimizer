@@ -12,11 +12,10 @@ export async function POST(request: NextRequest) {
     }
 
     const event = JSON.parse(body);
-    console.log("✅ Creem webhook received:", event.type, event.data?.id);
 
     if (event.type === "checkout.completed") {
       const customerEmail = event.data?.customer?.email || "unknown";
-      console.log(`🎉 Payment completed from: ${customerEmail}`);
+      // Payment completed - customer upgraded to Pro
     }
 
     return NextResponse.json({ received: true });
