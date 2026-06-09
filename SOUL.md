@@ -14,18 +14,28 @@ AI-powered resume optimization tool. Upload a resume → AI analysis → get sco
 ## Directory Structure
 ```
 resume-optimizer/
-├── apps/web/          ← Next.js application
+├── apps/web/             ← Next.js application (pages, UI components, API routes)
 │   ├── src/
-│   │   ├── app/[locale]/  ← Pages (home, analyze, success, privacy)
-│   │   ├── app/api/      ← API routes (analyze, checkout, webhooks)
+│   │   ├── app/[locale]/ ← Pages (home, analyze, success, privacy)
+│   │   ├── app/api/      ← API routes (thin handlers, logic in shared/)
 │   │   ├── components/   ← UI components
-│   │   ├── lib/          ← AI, Creem library
-│   │   └── i18n/         ← i18n request config
-│   └── messages/         ← Translation files
-├── docs/
-├── package.json          ← Workspace root
+│   │   └── i18n/         ← next-intl request config
+│   ├── next.config.ts
+│   └── tsconfig.json
+├── shared/               ← Cross-platform shared layer
+│   ├── api/              ← API client wrappers (ai.ts, creem.ts)
+│   ├── constants/        ← Constants, enums, config data
+│   ├── messages/         ← Translation files (zh-CN.json, en.json)
+│   ├── types/            ← Type definitions, DTOs, interfaces
+│   └── utils/            ← Pure functions, utility functions
+├── package.json           ← Workspace root
 └── pnpm-workspace.yaml
 ```
+
+## Rules
+- Code that is cross-platform → `shared/`
+- Framework-specific code (Next.js) → `apps/web/`
+- Never put shared logic in `apps/*/src/lib/` or `apps/*/src/hooks/`
 
 ## Commands
 ```bash

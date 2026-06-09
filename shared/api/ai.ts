@@ -1,14 +1,8 @@
+import type { ResumeAnalysisResult } from "../types";
+
 const AI_API_KEY = process.env.OPENAI_API_KEY || "";
 const AI_BASE_URL = process.env.OPENAI_BASE_URL || "https://token.sensenova.cn/v1";
 const AI_MODEL = process.env.OPENAI_MODEL || "sensenova-6.7-flash-lite";
-
-export interface ResumeAnalysisResult {
-  score: number;
-  atsScore: number;
-  keywords: string[];
-  suggestions: string[];
-  improvedHtml: string;
-}
 
 export async function analyzeResume(
   text: string,

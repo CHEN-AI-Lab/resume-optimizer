@@ -6,6 +6,6 @@ export default getRequestConfig(async () => {
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "zh-CN";
   return {
     locale,
-    messages: (await import(`../../messages/${locale}.json`)).default,
+    messages: (await import(`@resume/shared/messages/${locale}.json`)).default,
   };
 });

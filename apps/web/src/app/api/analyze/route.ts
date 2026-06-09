@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { analyzeResume } from "../../../lib/ai";
+import { analyzeResume } from "@resume/shared/api/ai";
 
 export async function POST(request: NextRequest) {
   try {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyWebhookSignature } from "../../../../lib/creem";
+import { verifyWebhookSignature } from "@resume/shared/api/creem";
 
 export async function POST(request: NextRequest) {
   try {

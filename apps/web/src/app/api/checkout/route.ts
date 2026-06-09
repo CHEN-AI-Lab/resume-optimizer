@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createCheckoutSession } from "../../../lib/creem";
+import { createCheckoutSession } from "@resume/shared/api/creem";
 
 export async function POST(_request: NextRequest) {
   try {
