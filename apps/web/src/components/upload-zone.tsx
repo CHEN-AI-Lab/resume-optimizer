@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { ACCEPTED_MIME_TYPES, ACCEPTED_EXTENSIONS } from "@/lib/file-parser";
 
 interface UploadZoneProps {
   onFileSelected: (file: File) => void;
@@ -16,11 +17,19 @@ export default function UploadZone({ onFileSelected, isAnalyzing, disabled }: Up
 
   const handleFile = useCallback(
     (file: File) => {
-      const validTypes = [
-        "application/pdf",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      ];
-      if (!validTypes.includes(file.type)) {
+      // Accept file if its MIME type or extension is in our supported list
+      const ext = file.name.split(".").pop()?.toLowerCase();
+      const acceptedExts = ["pdf", "docx", "doc", "txt"];
+      if (!ACCEPTED_MIME_TYPES.includes(file.type as any) && !ext) {
+        alert(t("formats"));
+        return;
+      }
+      if (ext && !acceptedExts.includes(ext)) {
+        alert(t("formats"));
+        return;
+      }
+      // Also reject if MIME known but not in list (e.g. application/zip)
+      if (file.type && file.type !== "" && !ACCEPTED_MIME_TYPES.includes(file.type as any) && !acceptedExts.includes(ext || "")) {
         alert(t("formats"));
         return;
       }
@@ -63,7 +72,7 @@ export default function UploadZone({ onFileSelected, isAnalyzing, disabled }: Up
       <input
         ref={inputRef}
         type="file"
-        accept=".pdf,.docx"
+        accept={ACCEPTED_EXTENSIONS}
         className="hidden"
         onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
         disabled={disabled}

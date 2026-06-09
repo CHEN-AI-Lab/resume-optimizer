@@ -1,3 +1,9 @@
 packages:
   - 'apps/*'
   - 'shared'
+  - 'packages/*'
+allowBuilds:
+  '@prisma/engines': true
+  prisma: true
+  '@prisma/client': true
+  unrs-resolver: false

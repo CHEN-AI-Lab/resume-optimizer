@@ -1,6 +1,8 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { AuthProvider } from "../providers";
+import { Toaster } from "sonner";
 import "../globals.css";
 
 const locales = ["zh-CN", "en"];
@@ -21,7 +23,10 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className="min-h-screen bg-white antialiased">
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <AuthProvider>
+            {children}
+            <Toaster position="top-center" richColors />
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

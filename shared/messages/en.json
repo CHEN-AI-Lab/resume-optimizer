@@ -7,13 +7,17 @@
   "nav": {
     "home": "Home",
     "analyze": "Resume",
+    "pricing": "Pricing",
+    "login": "Login",
+    "logout": "Logout",
     "privacy": "Privacy",
     "language": "中文"
   },
   "hero": {
     "title": "AI Resume Optimizer",
     "subtitle": "Upload your resume and get AI-powered analysis with actionable suggestions in 30 seconds",
-    "cta": "Optimize Your Resume"
+    "cta": "Optimize Your Resume",
+    "badge": "AI Powered • Results in 30s"
   },
   "features": {
     "title": "Why Choose Us",
@@ -33,7 +37,7 @@
   "pricing": {
     "free": {
       "name": "Free",
-      "price": "$0",
+      "price": "¥0",
       "desc": "Try AI resume analysis",
       "features": [
         "Basic resume scoring",
@@ -43,7 +47,7 @@
     },
     "pro": {
       "name": "Pro",
-      "price": "$1.99",
+      "price": "¥19.9",
       "desc": "One-time payment, lifetime access",
       "features": [
         "Deep ATS analysis",
@@ -53,15 +57,29 @@
         "Unlimited usage"
       ],
       "cta": "Upgrade Now"
-    }
+    },
+    "title": "Choose Your Plan",
+    "sectionTitle": "Pricing",
+    "subtitle": "Try free analysis, upgrade to Pro for full features",
+    "compareTitle": "Feature Comparison",
+    "unlimited": "Unlimited",
+    "monthly": "/day",
+    "currentPlan": "Current Plan",
+    "recommended": "Recommended",
+    "processing": "Processing..."
   },
   "upload": {
     "title": "Upload Your Resume",
     "drag": "Drag & drop your file here, or click to browse",
-    "formats": "Supports PDF, DOCX formats",
+    "formats": "Supports PDF, DOCX, DOC, TXT formats",
     "limit": "3 free analyses per day",
     "analyzing": "AI is analyzing your resume...",
-    "success": "Analysis complete!"
+    "success": "Analysis complete!",
+    "jdLabel": "Target job description (optional, helps AI tailor suggestions)",
+    "jdPlaceholder": "Paste the target job description...",
+    "proBadge": "Pro · Unlimited usage",
+    "remaining": "{count} free analyses remaining today",
+    "another": "Upload another resume"
   },
   "result": {
     "score": "Resume Score",
@@ -74,16 +92,44 @@
     "freeUsed": "Daily free limit reached",
     "upgrade": "Upgrade to Pro",
     "error": "Analysis failed, please try again",
-    "retry": "Upload Again"
+    "retry": "Upload Again",
+    "checkoutError": "Payment unavailable, please try again later"
   },
   "success": {
     "title": "Payment Successful! 🎉",
     "description": "Thank you for upgrading to Pro! You now have unlimited access to all features.",
-    "back": "Back to Home"
+    "back": "Back to Home",
+    "autoRedirect": "Redirecting in 3 seconds"
   },
   "footer": {
     "copyright": "© 2026 Resume Optimizer. All rights reserved.",
     "privacy": "Privacy Policy",
     "contact": "Contact Us"
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Register",
+    "registerSubtitle": "Create your account to get started",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "loginBtn": "Sign In",
+    "registerBtn": "Sign Up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "registerLink": "Register now",
+    "loginLink": "Sign in",
+    "loginSuccess": "Logged in successfully",
+    "registerSuccess": "Registered successfully",
+    "loginError": "Invalid email or password",
+    "registerError": "Registration failed, email may already be in use",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Password must be at least 6 characters",
+    "nameRequired": "Name is required",
+    "invalidEmail": "Invalid email format",
+    "logoutSuccess": "Logged out successfully",
+    "notLoggedIn": "Please login first",
+    "needLogin": "You need to login to use this feature"
   }
 }

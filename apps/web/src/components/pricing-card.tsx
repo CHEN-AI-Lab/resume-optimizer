@@ -28,14 +28,14 @@ export default function PricingCard({ onUpgrade, isLoading }: PricingCardProps) 
           ))}
         </ul>
         <div className="mt-6 px-4 py-2.5 text-center text-sm text-gray-500 border border-gray-200 rounded-xl">
-          当前使用
+          {t("currentPlan")}
         </div>
       </div>
 
       {/* Pro */}
       <div className="border-2 border-blue-500 rounded-2xl p-6 bg-blue-50 relative">
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-          推荐
+          {t("recommended")}
         </div>
         <h3 className="text-lg font-semibold text-gray-900">{t("pro.name")}</h3>
         <p className="text-3xl font-bold mt-2">{t("pro.price")}</p>
@@ -55,7 +55,7 @@ export default function PricingCard({ onUpgrade, isLoading }: PricingCardProps) 
           disabled={isLoading}
           className="mt-6 w-full px-4 py-2.5 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
         >
-          {isLoading ? "处理中..." : t("pro.cta")}
+          {isLoading ? t("processing") : t("pro.cta")}
         </button>
       </div>
     </div>

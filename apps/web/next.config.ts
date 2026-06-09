@@ -24,6 +24,9 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   outputFileTracingRoot: resolve("../../"),
   transpilePackages: ["@resume/shared"],
+  turbopack: {
+    root: resolve("../../"),
+  },
 };
 
 export default withNextIntl(nextConfig);

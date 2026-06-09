@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyWebhookSignature } from "@resume/shared/api/creem";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,8 +15,31 @@ export async function POST(request: NextRequest) {
     const event = JSON.parse(body);
 
     if (event.type === "checkout.completed") {
-      const customerEmail = event.data?.customer?.email || "unknown";
-      // Payment completed - customer upgraded to Pro
+      const metadata = event.data?.request_metadata || {};
+      const userId = metadata.user_id;
+      const transactionId = event.data?.id || "unknown";
+
+      if (userId) {
+        // Create or update purchase record
+        await prisma.purchase.upsert({
+          where: {
+            id: transactionId,
+          },
+          update: {
+            status: "active",
+          },
+          create: {
+            id: transactionId,
+            userId,
+            tier: "pro",
+            paymentId: transactionId,
+            status: "active",
+            expiresAt: new Date(
+              Date.now() + 365 * 24 * 60 * 60 * 1000
+            ), // 1 year from now
+          },
+        });
+      }
     }
 
     return NextResponse.json({ received: true });

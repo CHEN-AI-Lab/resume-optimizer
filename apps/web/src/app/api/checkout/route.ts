@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createCheckoutSession } from "@resume/shared/api/creem";
 
-export async function POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const checkoutUrl = await createCheckoutSession();
+    const body = await request.json().catch(() => ({}));
+    const userId = body?.userId as string | undefined;
+    const checkoutUrl = await createCheckoutSession(userId);
     return NextResponse.json({ checkoutUrl });
   } catch (error) {
     console.error("Checkout API error:", error);

@@ -3,15 +3,18 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import LanguageSwitcher from "./language-switcher";
 
 export default function Nav() {
   const t = useTranslations("nav");
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const locale = pathname.split("/")[1];
   const links = [
     { href: `/${locale}`, label: t("home") },
+    { href: `/${locale}/pricing`, label: t("pricing") },
     { href: `/${locale}/analyze`, label: t("analyze") },
   ];
 
@@ -38,6 +41,25 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
+          {session ? (
+            <button
+              onClick={() => signOut()}
+              className="px-3 py-1.5 rounded-lg text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+            >
+              {t("logout")}
+            </button>
+          ) : (
+            <Link
+              href={`/${locale}/login`}
+              className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
+                pathname.endsWith("/login")
+                  ? "text-blue-600 bg-blue-50 font-medium"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              }`}
+            >
+              {t("login")}
+            </Link>
+          )}
           <div className="w-px h-5 bg-gray-200 mx-1" />
           <LanguageSwitcher />
         </nav>

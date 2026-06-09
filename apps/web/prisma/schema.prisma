@@ -1,0 +1,34 @@
+// Prisma schema — SQLite for dev, switch to Neon Postgres for production
+// Production DATABASE_URL example: postgresql://user:***@ep-xxx.neon.tech/neondb
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String?
+  email     String     @unique
+  password  String     // bcrypt hash
+  purchases Purchase[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Purchase {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  tier         String   // "pro"
+  paymentId    String?  // Creem transaction ID
+  status       String   // "active", "expired"
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime?
+
+  @@index([userId])
+}

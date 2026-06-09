@@ -1,57 +1,77 @@
-# Resume Optimizer — AI 简历智能优化工具
+# Resume Optimizer
 
-上传简历，AI 在 30 秒内分析评分、提取关键词、给出优化建议，一键导出优化版 PDF。
+AI 智能简历优化工具。上传简历 → AI 分析 → 获取评分/ATS 匹配度/关键词/优化建议/改进版 HTML 简历。
 
-## 功能
+AI-powered resume optimization: upload → AI analysis → score/ATS match/keywords/suggestions/improved HTML.
 
-- 📄 上传 PDF/DOCX 简历
-- 🤖 AI 智能评分（总体评分 + ATS 通过率评分）
-- 🔑 关键词提取与分析
-- ✏️ 逐段优化建议
-- 📥 下载优化版简历
-- 🌐 中英文双语界面
-- 💰 免费3次/天，升级专业版无限使用
+## Features
 
-## 技术栈
+- **AI Analysis**: Score your resume, check ATS compatibility, get keyword suggestions
+- **Free Tier**: 3 analyses per day, no login required
+- **Pro Tier**: ¥19.9 lifetime — unlimited analyses, priority processing
+- **Bilingual**: Chinese (zh-CN) and English (en)
 
-- Next.js 15 (App Router)
-- TypeScript (strict)
-- Tailwind CSS 4
-- next-intl (国际化)
-- SenseTime AI API
-- Creem 支付
-
-## 快速启动
+## Quick Start
 
 ```bash
-# 安装依赖
-npm install --registry=https://registry.npmmirror.com
+# Install dependencies
+pnpm install
 
-# 启动开发服务器
-npm run dev
+# Copy environment variables
+cp .env.example .env.local
+# Edit .env.local with your API keys
+
+# Start dev server (opens on http://localhost:3000)
+pnpm dev
 ```
 
-## 环境变量
+## Tech Stack
 
-复制 `.env.example` 并配置：
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 15 App Router |
+| Language | TypeScript (strict mode) |
+| Styling | Tailwind CSS 4 |
+| i18n | next-intl v4 (zh-CN + en) |
+| AI API | SenseTime (OpenAI-compatible) |
+| Payment | Creem (test mode) |
+| Monorepo | pnpm workspace |
 
-| 变量 | 说明 |
-|------|------|
-| `OPENAI_API_KEY` | AI API Key (兼容 OpenAI 格式) |
-| `OPENAI_BASE_URL` | AI API 地址 |
-| `OPENAI_MODEL` | 模型名称 |
-| `CREEM_API_KEY` | Creem 支付 API Key |
-| `CREEM_PRODUCT_ID` | Creem 产品 ID |
-| `CREEM_WEBHOOK_SECRET` | Creem Webhook Secret |
-| `NEXT_PUBLIC_APP_URL` | 网站 URL |
+## Project Structure
 
-## 部署
+```
+resume-optimizer/
+├── CLAUDE.md           ← Project map for AI agents
+├── docs/               ← Architecture, progress, decisions
+├── scripts/            ← Setup, check, deploy automation
+├── shared/             ← Cross-platform code (types, constants, api, utils, validators, hooks, messages)
+├── apps/web/           ← Next.js application
+├── packages/ui/        ← Shared UI components
+├── tests/unit/         ← Unit tests (Vitest)
+├── tests/e2e/          ← E2E tests (Playwright)
+└── .github/workflows/  ← CI/CD pipelines
+```
 
-一键部署到 Vercel：
+## Commands
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+| Command | Purpose |
+|---------|---------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Production build |
+| `pnpm lint` | ESLint check |
+| `pnpm test` | Run unit tests |
+| `pnpm test:e2e` | Run E2E tests (requires Playwright) |
+| `bash scripts/check.sh` | Full quality gate |
+| `bash scripts/setup.sh` | First-time setup |
 
-## 变现模式
+## Environment Variables
 
-- **免费**：每日 3 次 AI 基础分析
-- **专业版 ¥19.9**：无限使用 + 完整优化 + PDF 导出（一次性付费，永久有效）
+See `.env.example` for all required variables. Key ones:
+
+- `OPENAI_API_KEY` — SenseTime API key (sk-...)
+- `CREEM_API_KEY` — Creem payment key (creem_test_... for test mode)
+- `CREEM_PRODUCT_ID` — Creem product ID for the Pro tier
+
+## Deployment
+
+Push to `main` branch → Vercel auto-deploys.

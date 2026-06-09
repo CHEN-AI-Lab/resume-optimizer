@@ -7,13 +7,17 @@
   "nav": {
     "home": "首页",
     "analyze": "简历优化",
+    "pricing": "定价",
+    "login": "登录",
+    "logout": "退出",
     "privacy": "隐私政策",
     "language": "English"
   },
   "hero": {
     "title": "AI 智能简历优化",
     "subtitle": "上传你的简历，AI 在 30 秒内分析并给出优化建议，帮你拿到更多面试机会",
-    "cta": "开始优化简历"
+    "cta": "开始优化简历",
+    "badge": "AI Powered • 30 秒出结果"
   },
   "features": {
     "title": "为什么选择我们",
@@ -53,15 +57,29 @@
         "无限次使用"
       ],
       "cta": "立即升级"
-    }
+    },
+    "title": "选择你的方案",
+    "sectionTitle": "定价",
+    "subtitle": "免费体验 AI 分析，升级专业版解锁全部功能",
+    "compareTitle": "功能对比",
+    "unlimited": "无限",
+    "monthly": "次/天",
+    "currentPlan": "当前使用",
+    "recommended": "推荐",
+    "processing": "处理中..."
   },
   "upload": {
     "title": "上传你的简历",
     "drag": "拖拽文件到此处，或点击选择",
-    "formats": "支持 PDF、DOCX 格式",
+    "formats": "支持 PDF、DOCX、DOC、TXT 格式",
     "limit": "每天免费分析 3 次",
     "analyzing": "AI 正在分析你的简历...",
-    "success": "分析完成！"
+    "success": "分析完成！",
+    "jdLabel": "目标职位描述（可选，让 AI 更有针对性地优化）",
+    "jdPlaceholder": "粘贴目标职位的 JD 描述...",
+    "proBadge": "专业版 · 无限使用",
+    "remaining": "今日剩余 {count} 次免费分析",
+    "another": "上传另一份简历"
   },
   "result": {
     "score": "简历评分",
@@ -74,16 +92,44 @@
     "freeUsed": "今日免费次数已用完",
     "upgrade": "升级专业版",
     "error": "分析出错，请重试",
-    "retry": "重新上传"
+    "retry": "重新上传",
+    "checkoutError": "支付功能暂不可用，请稍后重试"
   },
   "success": {
     "title": "支付成功！🎉",
     "description": "感谢升级到专业版！现在可以无限次使用所有功能了。",
-    "back": "返回首页"
+    "back": "返回首页",
+    "autoRedirect": "3 秒后自动跳转"
   },
   "footer": {
     "copyright": "© 2026 Resume Optimizer. All rights reserved.",
     "privacy": "隐私政策",
     "contact": "联系我们"
+  },
+  "auth": {
+    "loginTitle": "登录",
+    "registerTitle": "注册",
+    "registerSubtitle": "创建账号，开始使用",
+    "email": "邮箱",
+    "password": "密码",
+    "name": "姓名",
+    "loginBtn": "登录",
+    "registerBtn": "注册",
+    "noAccount": "还没有账号？",
+    "hasAccount": "已有账号？",
+    "registerLink": "立即注册",
+    "loginLink": "去登录",
+    "loginSuccess": "登录成功",
+    "registerSuccess": "注册成功",
+    "loginError": "邮箱或密码错误",
+    "registerError": "注册失败，邮箱可能已被使用",
+    "emailRequired": "请输入邮箱",
+    "passwordRequired": "请输入密码",
+    "passwordMin": "密码至少 6 位",
+    "nameRequired": "请输入姓名",
+    "invalidEmail": "邮箱格式不正确",
+    "logoutSuccess": "已退出登录",
+    "notLoggedIn": "请先登录后使用",
+    "needLogin": "需要登录后才能使用此功能"
   }
 }

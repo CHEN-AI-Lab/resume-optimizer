@@ -36,7 +36,7 @@ export default function HomePage() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              AI Powered • 30秒出结果
+              {t("hero.badge")}
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-4">
               {t("hero.title")}
@@ -94,7 +94,7 @@ export default function HomePage() {
 
         {/* Pricing */}
         <section className="max-w-4xl mx-auto px-4 pb-20" id="pricing">
-          <h2 className="text-2xl font-bold text-center text-gray-900 mb-10">定价 / Pricing</h2>
+          <h2 className="text-2xl font-bold text-center text-gray-900 mb-10">{t("pricing.sectionTitle")}</h2>
           <PricingCard onUpgrade={handleUpgrade} isLoading={loading} />
         </section>
       </main>

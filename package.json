@@ -6,6 +6,22 @@
     "dev": "pnpm --filter resume-optimizer-web dev",
     "build": "pnpm --filter resume-optimizer-web build",
     "lint": "pnpm --filter resume-optimizer-web lint",
-    "start": "pnpm --filter resume-optimizer-web start"
+    "start": "pnpm --filter resume-optimizer-web start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "check": "bash scripts/check.sh"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "unrs-resolver"
+    ]
+  },
+  "dependencies": {
+    "sonner": "^2.0.7"
   }
 }

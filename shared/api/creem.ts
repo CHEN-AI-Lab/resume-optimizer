@@ -1,4 +1,6 @@
-export async function createCheckoutSession(): Promise<string> {
+export async function createCheckoutSession(
+  userId?: string
+): Promise<string> {
   const apiKey = process.env.CREEM_API_KEY;
   const productId = process.env.CREEM_PRODUCT_ID;
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -7,17 +9,23 @@ export async function createCheckoutSession(): Promise<string> {
     throw new Error("Payment not configured");
   }
 
+  const body: Record<string, unknown> = {
+    product_id: productId,
+    success_url: `${appUrl}/success`,
+    cancel_url: `${appUrl}/pricing`,
+  };
+
+  if (userId) {
+    body.request_metadata = { user_id: userId };
+  }
+
   const response = await fetch("https://api.creem.io/v1/checkouts", {
     method: "POST",
     headers: {
       "x-api-key": apiKey,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      product_id: productId,
-      success_url: `${appUrl}/success`,
-      cancel_url: `${appUrl}/analyze`,
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {

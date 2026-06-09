@@ -13,6 +13,7 @@ export default function SuccessPage() {
   const router = useRouter();
 
   useEffect(() => {
+    // Mark as paid locally (webhook will create DB record async)
     localStorage.setItem("resume_paid", "true");
     localStorage.removeItem("resume_daily_usage");
 
@@ -43,7 +44,7 @@ export default function SuccessPage() {
             </svg>
             {t("back")}
           </Link>
-          <p className="text-xs text-gray-400 mt-4">3 秒后自动跳转</p>
+          <p className="text-xs text-gray-400 mt-4">{t("success.autoRedirect")}</p>
         </div>
       </main>
     </div>

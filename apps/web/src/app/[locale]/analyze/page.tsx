@@ -3,15 +3,17 @@
 import { useState, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Nav from "@/components/nav";
 import UploadZone from "@/components/upload-zone";
 import ResultCard from "@/components/result-card";
 import PricingCard from "@/components/pricing-card";
 import Link from "next/link";
+import { toast } from "sonner";
+import { extractTextFromFile } from "@/lib/file-parser";
 
 const DAILY_LIMIT = 3;
 const LIMIT_KEY = "resume_daily_usage";
-const PAID_KEY = "resume_paid";
 
 interface AnalysisResult {
   score: number;
@@ -36,41 +38,53 @@ function incrementDailyCount(): number {
   return stored[today];
 }
 
-function isPaid(): boolean {
-  if (typeof window === "undefined") return false;
-  return localStorage.getItem(PAID_KEY) === "true";
-}
-
-function extractTextFromFile(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const text = e.target?.result as string;
-      resolve(text);
-    };
-    reader.onerror = () => reject(new Error("Failed to read file"));
-    reader.readAsText(file);
-  });
-}
-
 export default function AnalyzePage() {
   const t = useTranslations();
   const pathname = usePathname();
+  const router = useRouter();
   const locale = pathname.split("/")[1];
+  const { data: session, status } = useSession();
   const [file, setFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [paid, setPaid] = useState(false);
+  const [loadingPro, setLoadingPro] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [remaining, setRemaining] = useState(DAILY_LIMIT);
   const [jobDescription, setJobDescription] = useState("");
 
+  // Redirect to login if not authenticated
   useEffect(() => {
-    setPaid(isPaid());
-    const count = getDailyCount();
-    setRemaining(Math.max(0, DAILY_LIMIT - count));
-  }, []);
+    if (status === "unauthenticated") {
+      router.push(`/${locale}/login?callbackUrl=/${locale}/analyze`);
+    }
+  }, [status, router, locale]);
+
+  // Fetch pro status from server
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetch("/api/user/status")
+        .then((res) => res.json())
+        .then((data) => {
+          setPaid(data.pro);
+          if (data.pro) {
+            localStorage.setItem("resume_paid", "true");
+          }
+          setLoadingPro(false);
+        })
+        .catch(() => {
+          setLoadingPro(false);
+        });
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      const count = getDailyCount();
+      setRemaining(Math.max(0, DAILY_LIMIT - count));
+    }
+  }, [status]);
 
   const canAnalyze = paid || remaining > 0;
 
@@ -80,13 +94,13 @@ export default function AnalyzePage() {
     setResults(null);
 
     if (!canAnalyze) {
-      setError("今日免费次数已用完");
+      setError(t("result.freeUsed"));
       return;
     }
 
     setIsAnalyzing(true);
     try {
-      const text = await extractTextFromFile(f);
+      const { text } = await extractTextFromFile(f);
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -95,7 +109,7 @@ export default function AnalyzePage() {
 
       if (!res.ok) {
         const errData = await res.json();
-        throw new Error(errData.error || "分析失败");
+        throw new Error(errData.error || t("result.error"));
       }
 
       const data = await res.json();
@@ -106,19 +120,34 @@ export default function AnalyzePage() {
         setRemaining(Math.max(0, DAILY_LIMIT - newCount));
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : "分析失败，请重试");
+      const msg = e instanceof Error ? e.message : t("result.error");
+      // Special handling for legacy .doc files that couldn't be parsed
+      if (msg === "__DOC_CONVERSION__") {
+        setError("当前版本不支持直接解析旧版 .doc 格式，请转换为 .docx 格式后重试。");
+      } else {
+        setError(msg);
+      }
     }
     setIsAnalyzing(false);
-  }, [canAnalyze, paid, jobDescription]);
+  }, [canAnalyze, paid, jobDescription, t]);
 
   const handleUpgrade = async () => {
     setCheckoutLoading(true);
     try {
-      const res = await fetch("/api/checkout", { method: "POST" });
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: session?.user?.id }),
+      });
       const data = await res.json();
-      if (data.checkoutUrl) window.location.href = data.checkoutUrl;
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl;
+        return;
+      }
+      // API returned error without throwing
+      toast.error(data.error || t("result.checkoutError"));
     } catch (e) {
-      console.error("Checkout failed:", e);
+      toast.error(t("result.checkoutError"));
     }
     setCheckoutLoading(false);
   };
@@ -140,6 +169,24 @@ export default function AnalyzePage() {
     }
   };
 
+  if (status === "loading" || loadingPro) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Nav />
+        <div className="max-w-3xl mx-auto px-4 py-20 text-center text-gray-500">Loading...</div>
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Nav />
+        <div className="max-w-3xl mx-auto px-4 py-20 text-center text-gray-500">Redirecting...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Nav />
@@ -147,7 +194,7 @@ export default function AnalyzePage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900">{t("upload.title")}</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {paid ? "专业版 · 无限使用" : `今日剩余 ${remaining} 次免费分析`}
+            {paid ? t("upload.proBadge") : t("upload.remaining", { count: remaining })}
           </p>
         </div>
 
@@ -155,12 +202,12 @@ export default function AnalyzePage() {
         {!results && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              目标职位描述（可选，让 AI 更有针对性地优化）
+              {t("upload.jdLabel")}
             </label>
             <textarea
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
-              placeholder="粘贴目标职位的 JD 描述..."
+              placeholder={t("upload.jdPlaceholder")}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
@@ -178,25 +225,8 @@ export default function AnalyzePage() {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-            <p className="text-red-700 text-sm mb-2">{error}</p>
-            {!paid && remaining <= 0 && (
-              <button
-                onClick={handleUpgrade}
-                disabled={checkoutLoading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
-              >
-                {t("result.upgrade")}
-              </button>
-            )}
-            {remaining > 0 && (
-              <button
-                onClick={() => { setError(null); setFile(null); }}
-                className="text-sm text-blue-600 hover:underline"
-              >
-                {t("result.retry")}
-              </button>
-            )}
+          <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-4 text-sm">
+            {error}
           </div>
         )}
 
@@ -210,22 +240,24 @@ export default function AnalyzePage() {
           />
         )}
 
-        {/* Pricing for free users who haven't uploaded */}
-        {!file && !results && !error && remaining <= 0 && !paid && (
-          <div className="pt-8">
-            <PricingCard onUpgrade={handleUpgrade} isLoading={checkoutLoading} />
-          </div>
-        )}
-
-        {/* Upload another */}
+        {/* Show upload another button when results exist */}
         {results && (
           <div className="text-center">
             <button
               onClick={() => { setResults(null); setFile(null); setError(null); }}
               className="text-sm text-blue-600 hover:underline"
             >
-              上传另一份简历
+              {t("upload.another")}
             </button>
+          </div>
+        )}
+
+        {/* Upgrade prompt for free users who hit limit */}
+        {!results && !canAnalyze && !paid && (
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 text-center">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">{t("pricing.pro.name")}</h3>
+            <p className="text-sm text-gray-600 mb-4">{t("pricing.pro.desc")}</p>
+            <PricingCard onUpgrade={handleUpgrade} isLoading={checkoutLoading} />
           </div>
         )}
       </main>
