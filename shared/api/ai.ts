@@ -1,6 +1,6 @@
 import type { ResumeAnalysisResult } from "../types";
 
-const AI_API_KEY=proces..._KEY || "";
+const AI_API_KEY=process.env.AI_API_KEY || "";
 const AI_BASE_URL = process.env.AI_BASE_URL || "https://token.sensenova.cn/v1";
 const AI_MODEL = process.env.AI_MODEL || "sensenova-6.7-flash-lite";
 
