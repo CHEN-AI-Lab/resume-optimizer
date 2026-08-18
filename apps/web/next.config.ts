@@ -4,7 +4,8 @@ import { readFileSync, existsSync } from "fs";
 import { resolve } from "path";
 
 // Load global env for local development
-const envPath = resolve("/home/ubuntu/workspace/global.env");
+// Resolve relative to this file: apps/web/next.config.ts → ../../.shared/global.env
+const envPath = resolve(__dirname, "../../../../.shared/global.env");
 if (existsSync(envPath)) {
   const envContent = readFileSync(envPath, "utf-8");
   envContent.split("\n").forEach((line) => {
